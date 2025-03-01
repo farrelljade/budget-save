@@ -7,6 +7,15 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
 import { initializeTheme } from './composables/useAppearance';
 
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
+// Components
+import App from './App.vue'
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -22,6 +31,11 @@ declare module 'vite/client' {
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+const vuetify = createVuetify({
+    components,
+    directives,
+})
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./pages/${name}.vue`, import.meta.glob<DefineComponent>('./pages/**/*.vue')),
@@ -29,6 +43,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
+            .use(vuetify)
             .mount(el);
     },
     progress: {
