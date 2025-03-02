@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Expense;
 use App\Models\Income;
 use Illuminate\Http\Request;
@@ -23,7 +24,10 @@ class DashboardController extends Controller
             ->with(['category', 'vendor'])
             ->where('user_id', auth()->id())
             ->orderBy('date', 'desc')
-            ->paginate(10);
+            ->get();
+        $data['categories'] = Category::query()
+            ->orderBy('name')
+            ->get();
 
         return Inertia::render('Dashboard', $data);
     }

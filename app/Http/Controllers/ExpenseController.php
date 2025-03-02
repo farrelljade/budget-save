@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ExpenseStoreRequest;
 use App\Models\Expense;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -26,9 +28,15 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ExpenseStoreRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        if ($validated) {
+            $validated['amount'] = (float) $validated['amount'];
+
+            Expense::query()->create($validated);
+        }
     }
 
     /**

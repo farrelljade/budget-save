@@ -2,6 +2,7 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { defineAsyncComponent, ref } from 'vue';
+import { format } from 'date-fns';
 
 const AddNewExpenseDialogComponent = defineAsyncComponent(() =>
     import('@/pages/Components/AddNewExpenseDialog.vue')
@@ -13,12 +14,19 @@ const props = defineProps({
     },
     userExpenses: {
         type: Object
+    },
+    categories: {
+        type: Object
     }
 });
 
 const addNewExpenseDialog = ref(false);
 const openExpensesDialog = () => {
     addNewExpenseDialog.value = true;
+}
+
+const formatDate = (date) => {
+    return format(new Date(date), 'MMMM d, yyyy')
 }
 
 </script>
@@ -52,20 +60,28 @@ const openExpensesDialog = () => {
                 <thead>
                 <tr>
                     <th class="text-left">
+                        Category
+                    </th>
+                    <th class="text-left">
                         Description
                     </th>
                     <th class="text-left">
                         Amount
+                    </th>
+                    <th class="text-left">
+                        Date
                     </th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr
                     v-for="item in userExpenses"
-                    :key="item.id"
+                    :key="item?.id"
                 >
-                    <td>{{ item.description }}</td>
-                    <td>£{{ item.amount }}</td>
+                    <td>{{ item?.category.name }}</td>
+                    <td>{{ item?.description }}</td>
+                    <td>£{{ item?.amount }}</td>
+                    <td>{{ formatDate(item?.date) }}</td>
                 </tr>
                 </tbody>
             </v-table>
@@ -78,6 +94,7 @@ const openExpensesDialog = () => {
         persistent
     >
         <add-new-expense-dialog-component
+            :categories="categories"
             @close="addNewExpenseDialog = false"
         />
     </v-dialog>
