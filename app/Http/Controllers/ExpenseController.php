@@ -28,7 +28,7 @@ class ExpenseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ExpenseStoreRequest $request)
+    public function store(ExpenseStoreRequest $request): void
     {
         $validated = $request->validated();
 

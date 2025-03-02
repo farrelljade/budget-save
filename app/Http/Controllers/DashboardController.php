@@ -21,7 +21,7 @@ class DashboardController extends Controller
             ->orderBy('date', 'desc')
             ->get();
         $data['userExpenses'] = Expense::query()
-            ->with(['category', 'vendor'])
+            ->with('category')
             ->where('user_id', auth()->id())
             ->orderBy('date', 'desc')
             ->get();

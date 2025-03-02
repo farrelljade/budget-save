@@ -31,6 +31,14 @@ const totalExpenses = computed(() => {
    }, 0).toFixed(2);
 });
 
+const totalIncome = computed(() => {
+    if (!props.userIncomes || !props.userIncomes.length) return 0;
+
+    return props.userIncomes.reduce((sum, expense) => {
+        return sum + parseFloat(expense.amount);
+    }, 0).toFixed(2);
+});
+
 const addNewExpenseDialog = ref(false);
 const openAddNewExpensesDialog = () => {
     addNewExpenseDialog.value = true;
@@ -74,7 +82,7 @@ const formatDate = (date) => {
                 >
                     <v-card-title>Month's Income</v-card-title>
                     <v-card-text>
-                        <div class="text-h5 font-weight-bold">£3,450.00</div>
+                        <div class="text-h5 font-weight-bold">£{{ totalIncome }}</div>
                         <div class="d-flex align-center text-caption mt-2">
                             <v-icon size="small" class="mr-1">mdi-arrow-up</v-icon>
                             <span>12% from last month</span>

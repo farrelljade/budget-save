@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -12,7 +13,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('expenses', ExpenseController::class);
-    Route::resource('income', ExpenseController::class);
+    Route::resource('income', IncomeController::class);
 });
 
 require __DIR__.'/settings.php';

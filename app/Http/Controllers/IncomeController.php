@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IncomeStoreRequest;
 use App\Models\Income;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,15 @@ class IncomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(IncomeStoreRequest $request): void
     {
-        //
+        $validated = $request->validated();
+
+        if ($validated) {
+            $validated['amount'] = (float) $validated['amount'];
+
+            Income::query()->create($validated);
+        }
     }
 
     /**
