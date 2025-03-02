@@ -23,7 +23,7 @@ class ExpenseStoreRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'category_id.required' => 'The category field is required.',

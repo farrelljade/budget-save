@@ -12,6 +12,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('expenses', ExpenseController::class);
+    Route::resource('income', ExpenseController::class);
 });
 
 require __DIR__.'/settings.php';
